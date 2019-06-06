@@ -70,6 +70,20 @@ public class LinkedList {
         }
     }
 
+    public int length(Node head) {
+        int size = 0;
+        while (head != null) {
+            head = head.next;
+            size++;
+        }
+        return size;
+    }
+
+    public int lengthWithRecursion(Node head) {
+        if (head == null) return 0;
+        return 1 + lengthWithRecursion(head.next);
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.insertNode(1);
@@ -88,5 +102,9 @@ public class LinkedList {
         list.deleteAtGivenPosition(8);
         list.deleteAtGivenPosition(2);
         list.printList(list.head);
+        int length = list.length(list.head);
+        System.out.println(length);
+        int lengthWithRecursion = list.lengthWithRecursion(list.head);
+        System.out.println(lengthWithRecursion);
     }
 }
