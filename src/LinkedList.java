@@ -50,6 +50,26 @@ public class LinkedList {
         }
     }
 
+    public void deleteAtGivenPosition(int position) {
+        Node node = this.head;
+        Node prevNode = null;
+        int i = 0;
+
+        while (node != null) {
+            if (position == 0) {
+                this.head = node.next;
+                break;
+            } else if (position == i) {
+                prevNode.next = node.next;
+                break;
+            }
+
+            prevNode = node;
+            node = node.next;
+            i++;
+        }
+    }
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
         list.insertNode(1);
@@ -57,12 +77,16 @@ public class LinkedList {
         list.insertNode(3);
         list.insertNode(4);
         list.insertNode(5);
+        list.insertNode(9);
+        list.insertNode(6);
+        list.insertNode(5);
+        list.insertNode(8);
         list.printList(list.head);
         list.deleteWithKey(2);
         list.deleteWithKey(1);
-        list.deleteWithKey(5);
-        list.deleteWithKey(1);
-        list.deleteWithKey(8);
+        list.printList(list.head);
+        list.deleteAtGivenPosition(8);
+        list.deleteAtGivenPosition(2);
         list.printList(list.head);
     }
 }
