@@ -29,6 +29,25 @@ public class LinkedList {
             System.out.print(head.data + "-> ");
             head = head.next;
         }
+        System.out.println();
+    }
+
+    public void deleteWithKey(int data) {
+        Node node = this.head;
+        Node prevNode = null;
+
+        while (node != null) {
+            if (node.data == data) {
+                if (prevNode == null) {
+                    this.head = node.next;
+                    break;
+                }
+                prevNode.next = node.next;
+                break;
+            }
+            prevNode = node;
+            node = node.next;
+        }
     }
 
     public static void main(String[] args) {
@@ -38,6 +57,12 @@ public class LinkedList {
         list.insertNode(3);
         list.insertNode(4);
         list.insertNode(5);
+        list.printList(list.head);
+        list.deleteWithKey(2);
+        list.deleteWithKey(1);
+        list.deleteWithKey(5);
+        list.deleteWithKey(1);
+        list.deleteWithKey(8);
         list.printList(list.head);
     }
 }
