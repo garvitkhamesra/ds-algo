@@ -1,3 +1,8 @@
+ds/.idea/
+algo/.idea/
+ds/out/
+algo/out/
+ds/*.iml
+algo/*.iml
 .idea/
-out/
 *.iml
