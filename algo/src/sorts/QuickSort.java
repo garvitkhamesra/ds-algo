@@ -1,3 +1,5 @@
+package sorts;
+
 public class QuickSort {
 
     private static int partition(int[] arr, int l, int r) {
