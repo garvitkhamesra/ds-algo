@@ -1,3 +1,5 @@
+package search;
+
 public class BinarySearch {
     public static void main(String[] args) {
         int arr[] = new int[] {1, 3, 4, 6, 7, 8};
