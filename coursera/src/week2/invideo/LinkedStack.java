@@ -3,13 +3,13 @@
   Ths helps us to reduce the complexity to constant time rather then looping
     */
 
-public class LinkedStack {
+public class LinkedStack<T> {
     private Node head;
     private class Node {
-        private int data;
+        private T data;
         private Node next;
 
-        Node(int data) {
+        Node(T data) {
             this.data = data;
             this.next = null;
         }
@@ -19,7 +19,7 @@ public class LinkedStack {
         return head == null;
     }
 
-    public void push(int data) {
+    public void push(T data) {
         /*Node node = new Node(data);
         Node head = this.head;
         if (isEmpty()) {
@@ -38,7 +38,7 @@ public class LinkedStack {
         this.head = node;
     }
 
-    public int pop() {
+    public T pop() {
         /*int data = -1;
         Node prevNode = head;
         Node node = head;
@@ -53,10 +53,8 @@ public class LinkedStack {
         prevNode.next = null;
         return data; */
 
-        Node node = head.next;
-        int data = head.data;
-        head.next = null;
-        head = node;
+        T data = head.data;
+        head = head.next;
         return data;
     }
 

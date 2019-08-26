@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
-public class Stack {
-    private Integer[] stack;
+public class Stack<T> {
+    private T[] stack;
     private int top;
 
     Stack(int size) {
-        this.stack = new Integer[size];
+        this.stack = (T[]) new Object[size];
         this.top = -1;
     }
 
@@ -13,7 +13,7 @@ public class Stack {
         return top == -1;
     }
 
-    public void push(int data) {
+    public void push(T data) {
         this.stack[++top] = data;
     }
 
