@@ -1,9 +1,9 @@
 package week1.invideo;
 
-public class WeightedQuickUnion {
+public class WeightedQuickUnionUF {
     private int id[];
     private int size[];
-    public WeightedQuickUnion (int n) {
+    public WeightedQuickUnionUF(int n) {
         id = new int[n];
         size = new int[n];
         for (int i = 0; i < n; i++) {
@@ -37,12 +37,12 @@ public class WeightedQuickUnion {
     }
 
     public static void main(String[] args) {
-        WeightedQuickUnion weightedQuickUnion = new WeightedQuickUnion(9);
-        weightedQuickUnion.union(1,2);
-        weightedQuickUnion.union(3,4);
-        weightedQuickUnion.union(6,5);
-        weightedQuickUnion.union(8,2);
-        weightedQuickUnion.union(1,6);
-        System.out.println(weightedQuickUnion.isConnected(1,8));
+        week1.invideo.WeightedQuickUnionUF weightedQuickUnionUF = new week1.invideo.WeightedQuickUnionUF(9);
+        weightedQuickUnionUF.union(1,2);
+        weightedQuickUnionUF.union(3,4);
+        weightedQuickUnionUF.union(6,5);
+        weightedQuickUnionUF.union(8,2);
+        weightedQuickUnionUF.union(1,6);
+        System.out.println(weightedQuickUnionUF.isConnected(1,8));
     }
 }

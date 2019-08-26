@@ -1,3 +1,7 @@
+package week1.assignment;
+
+import week1.assignment.Percolation;
+
 public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
