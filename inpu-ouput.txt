@@ -1,0 +1,11 @@
+2nd best approach for io in java
+input
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+int t = Integer.parseInt(br.readLine());
+String line = br.readLine();
+String[] strs = line.trim().split("\\s+");
+
+output
+StringBuffer buf = new StringBuffer();
+buf.append(ints[i+1]+" ");
+System.out.println(buf);

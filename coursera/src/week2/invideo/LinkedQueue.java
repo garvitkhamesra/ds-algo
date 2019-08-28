@@ -1,5 +1,29 @@
-public class LinkedQueue<T> {
+import java.util.Iterator;
+
+public class LinkedQueue<T> implements Iterable<T> {
     private Node head, last;
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator<>();
+    }
+
+    private class ListIterator<T> implements Iterator<T>{
+
+        private Node current = head;
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() {
+            T data = (T) current.data;
+            current = current.next;
+            return data;
+        }
+    }
+
     private class Node {
         T data;
         Node next;

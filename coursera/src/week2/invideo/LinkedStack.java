@@ -3,8 +3,11 @@
   Ths helps us to reduce the complexity to constant time rather then looping
     */
 
-public class LinkedStack<T> {
+import java.util.Iterator;
+
+public class LinkedStack<T> implements Iterable<T>{
     private Node head;
+
     private class Node {
         private T data;
         private Node next;
@@ -12,6 +15,26 @@ public class LinkedStack<T> {
         Node(T data) {
             this.data = data;
             this.next = null;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator<T>();
+    }
+
+    private class ListIterator<T> implements Iterator<T> {
+        private Node current = head;
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() {
+            T data = (T) current.data;
+            current = current.next;
+            return data;
         }
     }
 

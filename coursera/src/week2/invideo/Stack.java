@@ -17,12 +17,14 @@ public class Stack<T> {
         this.stack[++top] = data;
     }
 
-    public void pop() {
+    public T pop() {
         /*An object can't be garbage collected as long as it is reachable. If you simply change your index with --N,
         but do not nullify a[N], you will keep a reference to that object, preventing its garbage collection even if
         the client code does not reference that object any longer.
         An object that exists beyond its intended lifetime is, by definition, a loitering object. */
+        T data = this.stack[top];
         this.stack[top--] = null;
+        return data;
     }
 
     public void printStack() {
