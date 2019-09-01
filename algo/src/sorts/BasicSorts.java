@@ -1,10 +1,11 @@
 package sorts;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class BasicSorts<T> {
 
-        public void insertionSort(Comparable arr[], int size) {
+    public void insertionSort(Comparable arr[], int size) {
         // Sorting all the element before it
         for (int i = 1; i < size; i++) {
             for (int j = i; j > 0; j--) {
@@ -46,9 +47,14 @@ public class BasicSorts<T> {
     }
 
     public static void main(String[] args) {
-        Integer arr[] = new Integer[] {6, 34, 5, 4, 1, 3, 58, 2, 1};
-        int size = arr.length;
         BasicSorts basicSorts = new BasicSorts();
+
+        Random rd = new Random();
+        Integer[] arr = new Integer[9];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = rd.nextInt();
+        }
+        int size = arr.length;
 
         // Bubble Sort
         basicSorts.bubbleSort(arr, size);
