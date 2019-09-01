@@ -7,13 +7,11 @@ public class InfixExpEvaluation {
         int val = 0;
         Stack numStack = new Stack(exp.length());
         Stack oprStack = new Stack(exp.length());
-        Pattern patternNum = Pattern.compile("\\d");
         Pattern patternOp = Pattern.compile("[-*+/]");
         for (int i = 0; i < exp.length(); i++) {
             char ch = exp.charAt(i);
             if (ch == '(') continue;
-            Matcher matcher = patternNum.matcher(String.valueOf(ch));
-            if (matcher.matches()) {
+            if (Character.isDigit(ch)) {
                 numStack.push(Integer.parseInt(String.valueOf(ch)));
                 continue;
             }

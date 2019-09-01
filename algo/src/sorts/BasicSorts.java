@@ -2,16 +2,14 @@ package sorts;
 
 import java.util.Arrays;
 
-public class BasicSorts {
+public class BasicSorts<T> {
 
         public void insertionSort(Comparable arr[], int size) {
         // Sorting all the element before it
         for (int i = 1; i < size; i++) {
             for (int j = i; j > 0; j--) {
                 if (arr[j-1].compareTo(arr[j]) > 0) {
-                    Comparable temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    swap(arr, j, j-1);
                 }
             }
         }
@@ -22,12 +20,25 @@ public class BasicSorts {
         for (int i = 0; i < size-1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
                 if (arr[j].compareTo(arr[j+1]) > 0) {
-                    Comparable temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    swap(arr, j, j+1);
                 }
             }
         }
+    }
+
+    public void selectionSort(Comparable arr[], int size) {
+        // Finding minimum and then swap to current index
+        for (int i = 0; i < size-1; i++) {
+            int min = i;
+            for (int j = i; j < size; j++) if (arr[j].compareTo(arr[min]) < 0) min = j;
+            swap(arr, min, i);
+        }
+    }
+
+    private void swap(Comparable arr[], int a, int b) {
+        Comparable temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 
     public void printArray(Comparable arr[]) {
@@ -46,5 +57,10 @@ public class BasicSorts {
         // Insertion Sort
         basicSorts.insertionSort(arr, size);
         basicSorts.printArray(arr);
+
+        // Selection Sort
+        basicSorts.selectionSort(arr, size);
+        basicSorts.printArray(arr);
+
     }
 }

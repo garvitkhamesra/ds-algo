@@ -9,3 +9,6 @@ output
 StringBuffer buf = new StringBuffer();
 buf.append(ints[i+1]+" ");
 System.out.println(buf);
+
+
+Integer division will always give output nearer to 0.
