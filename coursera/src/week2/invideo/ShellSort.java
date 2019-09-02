@@ -6,15 +6,13 @@ import java.util.Random;
 public class ShellSort {
     public void shellSort(Comparable arr[], int size, int h, int x) {
         while (h >= 1) {
-            for (int i = 0; i <= size - h -1; i++) {
-                for (int j = i; j < size-h; j += h)
-                    if (arr[j].compareTo(arr[j+h]) > 0) {
-                        swap(arr, j, j+h);
-                    }
+            for (int i = 0; i <= size - h; i++) {
+                for (int j = i; j < size-h && (arr[j].compareTo(arr[j+h]) > 0); j += h)
+                    swap(arr, j, j+h);
+
             }
             h = 3*(--x) + 1;
         }
-
     }
 
     private void swap(Comparable arr[], int a, int b) {
