@@ -1,99 +1,203 @@
 package week2.assignment;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
+/**
+ * The type Deque.
+ *
+ * @param <Item> the type parameter
+ */
+public class Deque<Item> implements Iterable<Item> {
+    /**
+     * The Head.
+     */
+    private Node<Item> head;
+    /**
+     * The Tail.
+     */
+    private Node<Item> tail;
+    /**
+     * The Deque size.
+     */
+    private int dequeSize;
 
+    private class Node<Item> {
+        /**
+         * The Data.
+         */
+        Item data;
+        /**
+         * The Next.
+         */
+        Node<Item> next;
+        /**
+         * The Prev.
+         */
+        Node<Item> prev;
 
-public class Deque<Item> {
-    private int first, last = -1;
-    private Item deque[];
+        /**
+         * Instantiates a new Node.
+         *
+         * @param data the data
+         */
+        Node(Item data) {
+            this.data = data;
+        }
+    }
 
+    /**
+     * Instantiates a new Deque.
+     */
     public Deque() {
-        this.deque = (Item[]) new Object[2];
-        first = deque.length;
+        dequeSize = 0;
     }
 
+    /**
+     * Is empty boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEmpty() {
-        return last == -1 && first == deque.length;
+        return dequeSize == 0;
     }
 
+    /**
+     * Size int.
+     *
+     * @return the int
+     */
     public int size() {
-        if (last == -1 && first == deque.length) return 0;
-        else return (last - 0) + (deque.length - first) + 1;
+        return dequeSize;
     }
 
+    /**
+     * Add first.
+     *
+     * @param item the item
+     */
     public void addFirst(Item item) {
-        if (size() == deque.length) resize(2 * deque.length);
-        deque[++last] = item;
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
+        Node<Item> newNode = new Node<Item>(item);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            head.prev = newNode;
+            newNode.next = head;
+            head = newNode;
+        }
+        dequeSize++;
     }
 
+    /**
+     * Add last.
+     *
+     * @param item the item
+     */
     public void addLast(Item item) {
-        if (size() == deque.length) resize(2 * deque.length);
-        deque[--first] = item;
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
+        Node<Item> newNode = new Node<Item>(item);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        dequeSize++;
     }
 
+    /**
+     * Remove first item.
+     *
+     * @return the item
+     */
     public Item removeFirst() {
-        Item data = deque[last];
-        deque[last--] = null;
-        if (size() == (deque.length / 4)) resize(deque.length / 2);
-        return data;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Item headData = head.data;
+        if (dequeSize == 1) {
+            head = null;
+            tail = null;
+        } else {
+            Node<Item> headNext = head.next;
+            headNext.prev = null;
+            head = headNext;
+        }
+        dequeSize--;
+        return headData;
     }
 
+    /**
+     * Remove last item.
+     *
+     * @return the item
+     */
     public Item removeLast() {
-        Item data = deque[first];
-        deque[first++] = null;
-        if (size() == (deque.length / 4)) resize(deque.length / 2);
-        return data;
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        Item tailData = tail.data;
+        if (dequeSize == 1) {
+            head = null;
+            tail = null;
+        } else {
+            Node<Item> tailPrev = tail.prev;
+            tailPrev.next = null;
+            tail = tailPrev;
+        }
+        dequeSize--;
+        return tailData;
     }
 
+    /**
+     * Iterator iterator.
+     *
+     * @return the iterator
+     */
     public Iterator<Item> iterator() {
         return new CustomIterator();
     }
 
-    public static void main(String[] args) {
-        Deque deque = new Deque();
-        deque.addFirst(1);
-        deque.addFirst(2);
-        deque.addFirst(3);
-        deque.removeFirst();
-        deque.addLast(5);
-        deque.addLast(6);
-        deque.removeLast();
-    }
-
-    private void resize(int length) {
-        Item[] temp = (Item[]) new Object[length];
-        for (int i = 0; i <= last; i++) {
-            temp[i] = deque[i];
-        }
-        int tempLength = length - 1;
-        for (int i = deque.length - 1; i >= first; i--) {
-            temp[tempLength] = deque[i];
-            tempLength--;
-        }
-        first = tempLength;
-        deque = temp;
-    }
-
     private class CustomIterator implements Iterator<Item> {
-        int i, j;
+        private Node<Item> temp;
+
+        /**
+         * Instantiates a new Custom iterator.
+         */
         CustomIterator() {
-            i = first;
-            j = 0;
+            temp = head;
         }
 
         public boolean hasNext() {
-            return (i < deque.length && j <= last);
+            return temp != null;
         }
-
         public Item next() {
-            if (i < deque.length) {
-                return deque[i--];
-            } else {
-                return deque[j++];
+            if (!hasNext()) {
+                throw new NoSuchElementException();
             }
+            Item tempData = temp.data;
+            temp = temp.next;
+            return tempData;
         }
         public void remove() {
+            throw new UnsupportedOperationException();
         }
+    }
+
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    public static void main(String[] args) {
+        // unit testing (required)
     }
 }
