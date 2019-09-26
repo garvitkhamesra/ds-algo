@@ -9,17 +9,48 @@ import java.util.NoSuchElementException;
  * @param <Item> the type parameter
  */
 public class Deque<Item> implements Iterable<Item> {
-    private static final int SIZE_BY_FOUR = 4;
-    private int first;
-    private int last = -1;
-    private Item[] deque = null;
+    /**
+     * The Head.
+     */
+    private Node<Item> head;
+    /**
+     * The Tail.
+     */
+    private Node<Item> tail;
+    /**
+     * The Deque size.
+     */
+    private int dequeSize;
+
+    private class Node<Item> {
+        /**
+         * The Data.
+         */
+        Item data;
+        /**
+         * The Next.
+         */
+        Node<Item> next;
+        /**
+         * The Prev.
+         */
+        Node<Item> prev;
+
+        /**
+         * Instantiates a new Node.
+         *
+         * @param data the data
+         */
+        Node(Item data) {
+            this.data = data;
+        }
+    }
 
     /**
      * Instantiates a new Deque.
      */
     public Deque() {
-        this.deque = instantiate(2);
-        first = deque.length;
+        dequeSize = 0;
     }
 
     /**
@@ -28,7 +59,7 @@ public class Deque<Item> implements Iterable<Item> {
      * @return the boolean
      */
     public boolean isEmpty() {
-        return last == -1 && first == deque.length;
+        return dequeSize == 0;
     }
 
     /**
@@ -37,14 +68,7 @@ public class Deque<Item> implements Iterable<Item> {
      * @return the int
      */
     public int size() {
-        if (last == -1 && first == deque.length) {
-            return 0;
-        } else {
-            if (last > -1) {
-                return last + (deque.length - first) + 1;
-            }
-            return (deque.length - first);
-        }
+        return dequeSize;
     }
 
     /**
@@ -52,14 +76,20 @@ public class Deque<Item> implements Iterable<Item> {
      *
      * @param item the item
      */
-    public void addFirst(final Item item) {
+    public void addFirst(Item item) {
         if (item == null) {
             throw new IllegalArgumentException();
         }
-        if (size() == deque.length) {
-            resize(2 * deque.length);
+        Node<Item> newNode = new Node<Item>(item);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            head.prev = newNode;
+            newNode.next = head;
+            head = newNode;
         }
-        deque[--first] = item;
+        dequeSize++;
     }
 
     /**
@@ -67,14 +97,20 @@ public class Deque<Item> implements Iterable<Item> {
      *
      * @param item the item
      */
-    public void addLast(final Item item) {
+    public void addLast(Item item) {
         if (item == null) {
             throw new IllegalArgumentException();
         }
-        if (size() == deque.length) {
-            resize(2 * deque.length);
+        Node<Item> newNode = new Node<Item>(item);
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
         }
-        deque[++last] = item;
+        dequeSize++;
     }
 
     /**
@@ -86,20 +122,17 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        if (first == deque.length) {
-            Item data = deque[last];
-            deque[last--] = null;
-            if (size() == (deque.length / SIZE_BY_FOUR)) {
-                resize(deque.length / 2);
-            }
-            return data;
+        Item headData = head.data;
+        if (dequeSize == 1) {
+            head = null;
+            tail = null;
+        } else {
+            Node<Item> headNext = head.next;
+            headNext.prev = null;
+            head = headNext;
         }
-        Item data = deque[first];
-        deque[first++] = null;
-        if (size() == (deque.length / SIZE_BY_FOUR)) {
-            resize(deque.length / 2);
-        }
-        return data;
+        dequeSize--;
+        return headData;
     }
 
     /**
@@ -111,90 +144,60 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
-        if (last == -1) {
-            Item data = deque[first];
-            deque[first++] = null;
-            if (size() == (deque.length / SIZE_BY_FOUR)) {
-                resize(deque.length / 2);
-            }
-            return data;
+        Item tailData = tail.data;
+        if (dequeSize == 1) {
+            head = null;
+            tail = null;
+        } else {
+            Node<Item> tailPrev = tail.prev;
+            tailPrev.next = null;
+            tail = tailPrev;
         }
-        Item data = deque[last];
-        deque[last--] = null;
-        if (size() == (deque.length / SIZE_BY_FOUR)) {
-            resize(deque.length / 2);
-        }
-        return data;
+        dequeSize--;
+        return tailData;
     }
 
+    /**
+     * Iterator iterator.
+     *
+     * @return the iterator
+     */
     public Iterator<Item> iterator() {
         return new CustomIterator();
     }
 
-    private void resize(final int length) {
-        Item[] temp = instantiate(length);
-        int tempLength = 0;
-        for (int i = first; i < deque.length; i++) {
-            temp[tempLength] = deque[i];
-            tempLength++;
-        }
-        for (int i = 0; i <= last; i++) {
-            temp[tempLength] = deque[i];
-            tempLength++;
-        }
-        first = temp.length;
-        last = tempLength - 1;
-        deque = temp;
-    }
-
     private class CustomIterator implements Iterator<Item> {
-        private int i;
-        private int j;
+        private Node<Item> temp;
 
         /**
          * Instantiates a new Custom iterator.
          */
         CustomIterator() {
-            i = first;
-            j = 0;
+            temp = head;
         }
 
         public boolean hasNext() {
-            return (i < deque.length || j <= last);
+            return temp.next != null;
         }
-
         public Item next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            if (i < deque.length) {
-                Item item = deque[i];
-                i++;
-                return item;
-            } else if (j <= last) {
-                Item item = deque[j];
-                j++;
-                return item;
-            } else {
-                throw new NoSuchElementException();
-            }
+            Item tempData = temp.data;
+            temp = temp.next;
+            return tempData;
         }
         public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 
-
     /**
-     * Main.
+     * The entry point of application.
      *
-     * @param args the args
+     * @param args the input arguments
      */
-    public static void main(final String[] args) {
-	// For Unit Testing
-    }
-
-    private Item[] instantiate(int size) {
- 	return (Item[]) new Object[size];
+    public static void main(String[] args) {
+        // unit testing (required)
     }
 }
-

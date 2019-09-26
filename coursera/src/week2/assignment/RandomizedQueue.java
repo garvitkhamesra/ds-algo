@@ -1,5 +1,4 @@
 package week2.assignment;
-
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Iterator;
@@ -46,6 +45,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param item the item
      */
     public void enqueue(final Item item) {
+        if (item == null) {
+            throw new IllegalArgumentException();
+        }
         if (size() == queue.length) {
             resize(2 * queue.length);
         }
@@ -58,14 +60,20 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the item
      */
     public Item dequeue() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         if (size() == queue.length / 4) {
             resize(queue.length / 2);
         }
-        int i = StdRandom.uniform(size());
+        int i = 0;
+        if (size() - 1 != 0) {
+            i = StdRandom.uniform(size());
+        }
         Item data = queue[i];
-        swap(index - 1, i);
-        queue[index] = null;
         index--;
+        swap(index, i);
+        queue[index] = null;
         return data;
     }
 
@@ -75,7 +83,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @return the item
      */
     public Item sample() {
-        int i = StdRandom.uniform(size());
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        int i = 0;
+        if (size() - 1 != 0) {
+            i = StdRandom.uniform(size());
+        }
         Item data = queue[i];
         return data;
     }
@@ -89,7 +103,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-	// For Unit Testing
+        // For Unit Testing
     }
 
     private void resize(int size) {
@@ -123,7 +137,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            int iter = StdRandom.uniform(size());
+            int iter = 0;
+            if (size() - 1 != 0) {
+                iter = StdRandom.uniform(size());
+            }
             i--;
             return queue[iter];
         }
@@ -133,4 +150,3 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return (Item[]) new Object[size];
     }
 }
-
