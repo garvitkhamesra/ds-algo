@@ -104,6 +104,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
      */
     public static void main(String[] args) {
         // For unit testing
+        RandomizedQueue<Integer> rq = new RandomizedQueue<Integer>();
+        rq.enqueue(4);
+        rq.enqueue(1);
+        rq.enqueue(0);
+        rq.enqueue(0);
+        rq.dequeue();
     }
 
     private void resize(int size) {
@@ -127,7 +133,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         CustomIterator() {
             i = index - 1;
             tempQueue = queue;
-            StdRandom.shuffle(tempQueue);
         }
         public boolean hasNext() {
             return i >= 0;
@@ -139,7 +144,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            return tempQueue[i--];
+            int iter = 0;
+            if (size() - 1 != 0) {
+                iter = StdRandom.uniform(i+1);
+            }
+            Item temp = tempQueue[iter];
+            tempQueue[iter] = tempQueue[i];
+            tempQueue[i] = temp;
+
+            i--;
+            return temp;
         }
     }
 
