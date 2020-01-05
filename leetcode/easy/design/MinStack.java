@@ -18,11 +18,18 @@ public class MinStack {
 
     public void push(int x) {
         increaseSize();
-        if (min > x) min = x;
+        if (min >= x) {
+            stack[++top] = min;
+            min = x;
+        }
         stack[++top] = x;
     }
 
     public void pop() {
+        if (min == stack[top]) {
+            top--;
+            min = stack[top];
+        }
         top--;
     }
 
@@ -38,7 +45,7 @@ public class MinStack {
         if (top >= size/2) {
             int[] temp = new int[size*2];
             size *= 2;
-            for (int i = 0; i < top; i++) {
+            for (int i = 0; i <= top; i++) {
                 temp[i] = stack[i];
             }
             stack = temp;
