@@ -15,4 +15,9 @@ public class BadVersion {
         if (isBadVersion(mid)) return badVersion(l, mid-1);
         else return badVersion(mid+1, r);
     }
+
+    private boolean isBadVersion(int i) {
+        return false;
+    }
+
 }

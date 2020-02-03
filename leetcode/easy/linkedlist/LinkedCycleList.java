@@ -1,4 +1,4 @@
-package easy.linkedlist;
+package linkedlist;
 
 /**
  * User: garvit
