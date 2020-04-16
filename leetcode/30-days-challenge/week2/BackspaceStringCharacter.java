@@ -1,3 +1,5 @@
+package week2;
+
 /**
  * Created by dot on 9/4/20 2:31 PM
  * Package: PACKAGE_NAME
