@@ -9,11 +9,11 @@ class Orders {
         List<List<String>> res = new ArrayList<>();
         if (orders == null || orders.size() == 0) return res;
 
-        Map<String, List<String>> map = new HashMap<>();
-        SortedSet<String> dishes = new TreeSet<>();
+        TreeMap<Integer, List<String>> map = new TreeMap<>();
+        Set<String> dishes = new HashSet<>();
         for (List<String> list: orders) {
             String food = list.get(2);
-            String table = list.get(1);
+            int table = Integer.parseInt(list.get(1));
 
             dishes.add(food);
             if (map.containsKey(table)) {
@@ -24,6 +24,22 @@ class Orders {
                 map.put(table, new ArrayList<String>(){{add(food);}});
             }
         }
+
+        List<String>foodItems = new ArrayList<>(dishes);
+        Collections.sort(foodItems);
+
+        for (Map.Entry<Integer, List<String>> entry : map.entrySet()) {
+            List<String> val = new ArrayList<>();
+            val.add(String.valueOf(entry.getKey()));
+            List<String> arr = entry.getValue();
+            for (String s : foodItems) {
+                val.add(String.valueOf(Collections.frequency(arr, s)));
+            }
+            res.add(val);
+        }
+
+        foodItems.add(0, "Table");
+        res.add(0, foodItems);
 
         return res;
     }
