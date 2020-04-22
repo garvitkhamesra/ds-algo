@@ -1,0 +1,131 @@
+So, I was going through some coding problems and stuck with this one for quite some time, and after a ton of research on google, going through different posts and portals, I have understood this problem. Will try to explain it as simple as I can.
+
+The problem has 3 solutions:
+
+ 1. **Using HashMap**: But as we know that will add O(N) space complexity and we don't want that. But for a little bit of understanding, the approach is to iterate the array, get the count of the digits and maintain it in map. Then iterate the map and where the count is 1 that will be your answer.
+ 2. **Using Bitwise operators**: The logic for this approach is to think the numbers in bits and then add all the bits of each position. So after adding you will see that the sum is either multiple of 3 or multiple of 3 + 1 (Because the other number is occurring once only). After this, if you do a modulo on this sum you will have the result. You will understand better with the example.
+<br><br>
+**Example**: Array - [5, 5, 5, 6]<br>
+&emsp;5 represented in bits: 101<br>
+&emsp;6 represented in bits: 110<br>
+<br>
+&emsp;[ 101, 101, 101, 110] (Binary Reprenstation of values)<br>&emsp;After adding to particular positions, we will have<br>
+&emsp;&emsp;0th -> 3,&emsp;1th -> 1, &emsp;2nd -> 4
+<br>
+&emsp;and if you mod by 3 it will become<br>
+&emsp;&emsp;0th -> 0, &emsp;1th -> 1,&emsp;2nd -> 1
+<br>
+&emsp;which in decimal representation is our answer 6.<br>
+Now we need to code the same. I have explained the code using comments.
+<br>
+```
+public class SingleNumberII {
+    /*
+    * Because the max integer value will go upto 32 bits
+    * */
+    private static final int INT_SIZE = 32;
+
+    public int singleNumber(final int[] A) {
+
+        int result = 0;
+        for(int bitIterator = 0; bitIterator < INT_SIZE; bitIterator++) {
+            int sum = 0, mask = (1 << bitIterator);
+            /*
+            * Mask:
+            * 1 << any number means -> it will add that number of 0 in right of 1
+            * 1 << 2 -> 100
+            * Why we need mask? So when we do addition we will only count 1's,
+            * this mask will help us do that
+            * */
+            for(int arrIterator = 0; arrIterator < A.length; arrIterator++) {
+                /*
+                * The next line is to do the sum.
+                * So 1 & 1 -> 0
+                * 1 & 0 -> 0
+                * The if statement will add only when there is 1 present at the position
+                * */
+                if((A[arrIterator] & mask) != 0) {
+                    sum++;
+                }
+            }
+
+            /*
+            * So if there were 3 1's and 1 0's
+            * the result will become 0
+            * */
+            if(sum % 3 == 1) {
+                result |= mask;
+            }
+        }
+
+        /*So if we dry run our code with the above example
+        * bitIterator = 0; result = 0; mask = 1;
+        * after for loop the sum at position 0 will became 3. The if
+        * condition will be true for 5 as - (101 & 001 -> 001) and false for 6
+        * (110 & 001 -> 000)
+        * result -> 0 | 1 -> 0
+        *
+        * bitIterator = 1; result = 0; mask = 10;
+        * after for loop the sum at position 1 will became 1. The if
+        * condition will be true for 6 as - (110 & 010 -> 010) and false for 5
+        * (101 & 010 -> 000)
+        * result -> 00 | 10 -> 10
+        *
+        * bitIterator = 2; result = 10; mask = 100;
+        * after for loop the sum at position 2 will became 4. The if
+        * condition will be true for 6 as - (110 & 100 -> 100) and true for 5
+        * (101 & 100 -> 100)
+        * result -> 10 | 100 -> 110 (answer)
+        * */
+        return result;
+    }
+}
+```
+As we can see this is not the best solution, because we are unnecessary iterating it over 32 times and it is also not that generalized. Which makes as to visit our next approach.
+
+ 3. **Using Bitwise operators (Optimized and Generalized)**:<br>
+So for this approach, I'll try to explain the approach, then code and then how to make it generalize.
+We will take 2 flags(one, two) for analogy consider them as sets.
+So we the number appears 1st time it will be added in one only if it is not present in two. and we will do the same for two, meaning if the number appears 2nd time we will remove it from 1 and then add it to two(only if it is not present in one) and for the number appearing a third time it will be removed from the set two and will no longer exist in either set.
+```
+public int singleNumberOptimized(int[] A) {
+    int one = 0, two = 0;
+    /*
+    * Two sets to maintain the count the number has appeared
+    * one -> 1 time
+    * two -> 2 time
+    * three -> not in any set
+    * */
+    for(int arrIterator = 0; arrIterator < A.length; arrIterator++){
+        /*
+        * IF one has a number already remove it, and it does not have that number
+        * appeared previously and it is not there in 2 then add it in one.
+        * */
+        one = (one ^ A[arrIterator]) & ~two;
+        /*
+         * IF two has a number already remove it, and it does not have that number
+         * appeared previously and it is not there in 1 then add it in two.
+         * */
+        two = (two ^ A[arrIterator]) & ~one;
+    }
+
+    /*
+    * Dry run
+    * First Appearance : one will have two will not
+    * Second Appearance : one will remove and two will add
+    * Third Appearance: one will not able to add as it is there in two
+    * and two will remove because it was there.
+    *
+    * So one will have only which has occurred once and two will not have anything
+    * */
+    return one;
+}
+```
+**How to solve these type of questions more generically?**
+The number of sets you need to create depends on the value of k (Appearance of every other integer).
+m >= log(K). (To count the number of 1's in the array such that whenever the counted number of 1 reaches a certain value, say k, the count returns to zero and starts over. To keep track of how many 1's we have encountered so far, we need a counter. Suppose the counter has m bits.) m will be the number of sets we need.<br>
+For everything else, we are using the same logic. But wait what should I return, the logic is to do OR operations with all the sets which will eventually the OR operation on the single number with itself and some 0s, which interns to the single number.
+For a better understanding of this particular part go through this post [here][1].
+
+
+  [1]: https://leetcode.com/problems/single-number-ii/discuss/43295/Detailed-explanation-and-generalization-of-the-bitwise-operation-method-for-single-numbers
