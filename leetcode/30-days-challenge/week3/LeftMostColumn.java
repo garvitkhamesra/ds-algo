@@ -32,4 +32,22 @@ public class LeftMostColumn {
         }
         return i;
     }
+
+    public int leftMostColumnWithOneTopDown(BinaryMatrix binaryMatrix) {
+        List<Integer> dimensions = binaryMatrix.dimensions();
+        int result = -1, row = dimensions.get(0), col =  dimensions.get(1);
+        int pX = 0, pY = col - 1;
+
+        while (pX < row && pY >= 0) {
+            int temp = binaryMatrix.get(pX, pY);
+            if (temp == 1) {
+                result = pY;
+                pY--;
+            } else {
+                pX++;
+            }
+        }
+
+        return result;
+    }
 }
