@@ -113,7 +113,7 @@ public class Heap {
             index = parentIndex;
         }
     }
-is
+
     private void minHeapifyDown() {
         int index = 0;
         while (hasLeftChild(index)) {
