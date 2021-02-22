@@ -4,8 +4,11 @@ public class InterfaceImpl implements interface1, interface2 {
         return interface1.super.sum(2, 3);
     }
 
+
+
     public static void main(String[] args) {
         InterfaceImpl i = new InterfaceImpl();
         System.out.println(i.sum(2, 4));
+
     }
 }
