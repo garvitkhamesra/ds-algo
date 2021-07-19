@@ -1,19 +1,20 @@
 package Recursion;
 
 public class FloodFill {
-    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
-        helper(image, sr, sc, newColor, image[sr][sc]);
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor)
+    {   int c = image[sr][sc];
+        changeColor(image, sr, sc, newColor, c);
         return image;
     }
 
-    void helper(int[][] arr, int i, int j, int c, int p) {
-        if (i < 0 || j < 0 || i >= arr.length|| j >= arr[0].length) return;
-        if (arr[i][j] != p) return;
-        if (arr[i][j] == c) return;
-        arr[i][j] = c;
-        helper(arr, i+1, j, c, p);
-        helper(arr, i-1, j, c, p);
-        helper(arr, i, j+1, c, p);
-        helper(arr, i, j-1, c, p);
+    void changeColor(int[][] image, int sr, int sc, int newColor, int c) {
+        if (sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length
+                || image[sr][sc] != c || image[sr][sc] == newColor)
+            return;
+        image[sr][sc] = newColor;
+        changeColor(image, sr-1, sc, newColor, c);
+        changeColor(image, sr+1, sc, newColor, c);
+        changeColor(image, sr, sc-1, newColor, c);
+        changeColor(image, sr, sc+1, newColor, c);
     }
 }
