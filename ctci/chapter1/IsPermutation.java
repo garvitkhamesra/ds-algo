@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+package chapter1;
+
 import java.util.Arrays;
 
 public class IsPermutation {
