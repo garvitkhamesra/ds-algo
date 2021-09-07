@@ -65,6 +65,6 @@ public class RemoveDuplicate {
 
         //RemoveDuplicate.removeDuplicateWithBuffer(list.head);
         RemoveDuplicate.removeDuplicateWithoutBuffer(list.head);
-        printList(list);
+        printList(list.head);
     }
 }

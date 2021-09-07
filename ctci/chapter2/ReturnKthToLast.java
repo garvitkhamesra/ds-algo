@@ -67,6 +67,6 @@ public class ReturnKthToLast {
         System.out.println(kthFromLastWithLength(list.head, 8).val);
         System.out.println(kthFromLastWithLength(list.head, 1).val);
 
-        printList(list);
+        printList(list.head);
     }
 }

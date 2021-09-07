@@ -33,9 +33,9 @@ public class DeleteInMiddle {
         list = list.insert(list, 7);
         list = list.insert(list, 5);
 
-        printList(list);
+        printList(list.head);
         DeleteInMiddle.deleteGivenNode(list.head.next.next.next);
         System.out.println();
-        printList(list);
+        printList(list.head);
     }
 }

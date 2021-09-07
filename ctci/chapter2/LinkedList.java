@@ -32,11 +32,18 @@ public class LinkedList {
         return list;
     }
 
-    // Method to print the LinkedList.
-    public static void printList(LinkedList list)
-    {
-        ListNode currNode = list.head;
+    public static ListNode insertBefore(ListNode list, int data) {
+        ListNode node = new ListNode(data);
+        if (list != null) {
+            node.next = list;
+        }
+        return node;
+    }
 
+
+    // Method to print the LinkedList.
+    public static void printList(ListNode currNode)
+    {
         System.out.print("LinkedList: ");
 
         // Traverse through the LinkedList
@@ -70,6 +77,6 @@ public class LinkedList {
         list = insert(list, 8);
 
         // Print the LinkedList
-        printList(list);
+        printList(list.head);
     }
 }
