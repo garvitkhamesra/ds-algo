@@ -1,6 +1,6 @@
 package tree;
 
-import trees.TreeNode;
+import easy.trees.TreeNode;
 
 public class ConstructBSTFromInOrderPreOrder {
     public TreeNode buildTree(int[] preorder, int[] inorder) {

@@ -1,7 +1,6 @@
-package recursion.and.backtracking;
+package medium.recursion.backtracking;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ArrayPermutation {

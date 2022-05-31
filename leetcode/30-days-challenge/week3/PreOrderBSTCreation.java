@@ -1,6 +1,6 @@
 package week3;
 
-import trees.TreeNode;
+import easy.trees.TreeNode;
 
 /**
  * Created by dot on 20/4/20 8:13 PM

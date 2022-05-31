@@ -1,5 +1,7 @@
 package trees;
 
+import easy.trees.TreeNode;
+
 /**
  * Created by dot on 7/1/20 10:01 AM
  * Package: trees

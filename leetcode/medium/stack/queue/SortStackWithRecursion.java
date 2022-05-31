@@ -1,5 +1,6 @@
-package stack.queue;
+package medium.stack.queue;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class SortStackWithRecursion {
@@ -7,6 +8,7 @@ public class SortStackWithRecursion {
 
     public static void sort() {
         if (!stack.isEmpty()) {
+            System.out.println("Sort " + stack+" Stack Size: " + stack.size());
             int temp = stack.pop();
             sort();
             insert(temp);
@@ -14,11 +16,14 @@ public class SortStackWithRecursion {
     }
 
     private static void insert(int value) {
+        System.out.println("Insert " + stack+" Stack Size: " + stack.size());
         if (stack.isEmpty() || stack.peek() < value) {
+            System.out.println("Inserting Value: " + value);
             stack.push(value);
         } else {
             int temp = stack.pop();
             insert(value);
+            System.out.println("Inserting Value: " + temp);
             stack.push(temp);
         }
     }

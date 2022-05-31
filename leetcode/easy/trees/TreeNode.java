@@ -1,4 +1,4 @@
-package trees;
+package easy.trees;
 
 /**
  * Created by dot on 5/1/20 7:32 PM
