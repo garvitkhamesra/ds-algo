@@ -3,7 +3,7 @@ package chapter2;
 import linkedlist.ListNode;
 
 public class LinkedList {
-    ListNode head;
+    public ListNode head;
 
     public static LinkedList insert(LinkedList list, int data)
     {
