@@ -21,9 +21,11 @@ public class CombinationSumII {
 
         for (int i = index; i < arr.size(); i++) {
             if(i > index && arr.get(i) == arr.get(i-1)) continue; // skip duplicates
-            sum += arr.get(i); subSum.add(arr.get(i));
+            sum += arr.get(i);
+            subSum.add(arr.get(i));
             combinationSumSolver(arr, target, sum, i+1, result, subSum);
-            sum -= arr.get(i); subSum.remove(subSum.size() - 1);
+            sum -= arr.get(i);
+            subSum.remove(subSum.size() - 1);
         }
     }
 
