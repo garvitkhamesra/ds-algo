@@ -1,3 +1,5 @@
+package arrays;
+
 /**
  * Created by dot on 1/7/20 10:45 PM
  * https://leetcode.com/problems/arranging-coins/

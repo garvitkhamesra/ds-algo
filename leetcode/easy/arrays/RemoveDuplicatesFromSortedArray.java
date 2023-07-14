@@ -1,3 +1,5 @@
+package arrays;
+
 /**
  * Created by dot on 1/7/20 11:20 PM
  * https://leetcode.com/explore/interview/card/top-interview-questions-easy/92/array/727/

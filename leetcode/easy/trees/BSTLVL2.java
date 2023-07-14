@@ -1,3 +1,5 @@
+package trees;
+
 import javax.swing.tree.TreeNode;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +24,4 @@ public class BSTLVL2 {
         levelMaker(list, root.right, level+1);
         list.get(list.size()-level-1).add(root.val);
     }
-
-
-    
 }
