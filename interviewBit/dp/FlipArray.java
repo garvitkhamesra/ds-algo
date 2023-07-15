@@ -46,6 +46,7 @@ public class FlipArray {
 
             Pair a2 = dfs(A, n-1, capacity - A.get(n-1), dp); // pick
             Pair temp2 = new Pair(A.get(n-1) + a2.sum, 1 + a2.flips);
+//            Pair temp2 = new Pair(capacity - A.get(n-1), 1 + a2.flips);
 
             dp[n][capacity] = temp1.compare(temp2);
 
@@ -76,11 +77,12 @@ public class FlipArray {
 
         Pair ans = dfs(A, n, capacity, dp);
 //        System.out.println(ans);
+
         return ans.flips;
     }
 
     public static void main(String[] args) {
         FlipArray flipArray = new FlipArray();
-        System.out.println(flipArray.solve(Arrays.asList( 10, 14, 6 )));
+        System.out.println(flipArray.solve(Arrays.asList( 8, 4, 5, 7, 6, 2 )));
     }
 }
