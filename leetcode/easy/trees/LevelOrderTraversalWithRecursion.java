@@ -1,9 +1,9 @@
 package trees;
 
+import easy.trees.TreeNode;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Created by dot on 6/1/20 12:55 AM

@@ -1,6 +1,7 @@
 package trees;
 
-import java.util.ArrayList;
+import easy.trees.TreeNode;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
