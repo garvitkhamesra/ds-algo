@@ -43,10 +43,10 @@ public class Knapsack {
         }
         if (dp[n][c] != -1) return dp[n][c];
         if (b.get(n) > c) {
-            dp[n][c] = knapsackSolverRecursion(a, b, c, n-1);
+            dp[n][c] = knapsackSolverRecursionMemo(a, b, c, n-1, dp);
         } else {
-            dp[n][c] = Math.max(knapsackSolverRecursion(a, b, c, n-1),
-                    a.get(n) + knapsackSolverRecursion(a, b, c-b.get(n), n-1));
+            dp[n][c] = Math.max(knapsackSolverRecursionMemo(a, b, c, n-1, dp),
+                    a.get(n) + knapsackSolverRecursionMemo(a, b, c-b.get(n), n-1, dp));
         }
 
         return dp[n][c];

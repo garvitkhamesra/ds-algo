@@ -32,4 +32,21 @@ public class InOrderTraversalWithoutRecursion {
         }
         return res;
     }
+
+    public ArrayList<Integer> inorderTraversal(TreeNode A) {
+        Stack<TreeNode> s = new Stack<>();
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        TreeNode node = A;
+        while(!s.isEmpty() || node != null) {
+            if (node != null) {
+                s.push(node);
+                node = node.left;
+            } else {
+                node = s.pop();
+                res.add(node.val);
+                node = node.right;
+            }
+        }
+        return res;
+    }
 }
